@@ -24,3 +24,11 @@ proguard/
 
 # Log Files
 *.log
+
+.DS_Store
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+
+app/src/main/assets/
+app/src/main/res/

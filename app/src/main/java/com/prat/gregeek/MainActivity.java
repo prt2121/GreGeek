@@ -18,7 +18,6 @@
 package com.prat.gregeek;
 
 import com.prat.gregeek.db.DbAdapter;
-import com.prat.gregeek.model.Word;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -34,7 +33,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 public class MainActivity extends ActionBarActivity
@@ -69,15 +69,15 @@ public class MainActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         // test database
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                dbAdapter = new DbAdapter(MainActivity.this);
-                dbAdapter.open();
-                List<Word> words = dbAdapter.getAllWords();
-                Log.d(TAG, "size " + words.size());
-            }
-        }).start();
+        dbAdapter = new DbAdapter(MainActivity.this);
+        dbAdapter.open();
+        dbAdapter.getWords()
+                .onBackpressureBuffer()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(w -> {
+                    Log.d(TAG, w.getWord());
+                });
     }
 
     @Override

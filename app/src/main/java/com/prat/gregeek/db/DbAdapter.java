@@ -27,6 +27,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
+
 /**
  * Created by pt2121 on 7/16/14.
  */
@@ -63,6 +65,48 @@ public class DbAdapter {
         open();
         mDb.delete(DbHelper.TABLE_NAME, null, null);
         close();
+    }
+
+    public Observable<Word> getWords() {
+        return Observable.create(subscriber -> {
+            Cursor cursor = null;
+            final String[] columns = {DbHelper.WORD_ID, DbHelper.WORD,
+                    DbHelper.WORD_DEFINITION, DbHelper.WORD_EXAMPLE,
+                    DbHelper.WORD_SYNONYM,};
+            if (mDb.isOpen()) {
+                cursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null,
+                        null, DbHelper.WORD);
+            }
+            if (cursor != null && cursor.getCount() > 0) {
+                final int count = cursor.getCount();
+                cursor.moveToFirst();
+                for (int i = 0; i < count; i++) {
+                    int id = cursor.getInt(cursor.getColumnIndex(DbHelper.WORD_ID));
+                    final String wordStr = cursor.getString(cursor
+                            .getColumnIndex(DbHelper.WORD));
+                    final String def = cursor.getString(cursor
+                            .getColumnIndex(DbHelper.WORD_DEFINITION));
+                    final String ex = cursor.getString(cursor
+                            .getColumnIndex(DbHelper.WORD_EXAMPLE));
+                    final String syn = cursor.getString(cursor
+                            .getColumnIndex(DbHelper.WORD_SYNONYM));
+                    Word w = new Word();
+                    w.setId(id);
+                    w.setWord(wordStr);
+                    w.setDefinition(def);
+                    w.setExample(ex);
+                    w.setSynonyms(syn);
+                    cursor.moveToNext();
+                    if (!subscriber.isUnsubscribed()) {
+                        subscriber.onNext(w);
+                    }
+                }
+            }
+            if (cursor != null) {
+                cursor.close();
+            }
+            subscriber.onCompleted();
+        });
     }
 
     public List<Word> getAllWords() {

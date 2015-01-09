@@ -69,15 +69,20 @@ public class MainActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         // test database
+        /*
         dbAdapter = new DbAdapter(MainActivity.this);
         dbAdapter.open();
         dbAdapter.getWords()
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(w -> {
-                    Log.d(TAG, w.getWord());
-                });
+                .subscribe(w -> Log.d(TAG, w.getWord()));
+                */
+
+        // test database
+        dbAdapter = new DbAdapter(MainActivity.this);
+        dbAdapter.open();
+        Log.d(TAG, "count : " + dbAdapter.count());
     }
 
     @Override

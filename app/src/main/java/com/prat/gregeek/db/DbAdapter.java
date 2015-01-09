@@ -67,6 +67,21 @@ public class DbAdapter {
         close();
     }
 
+    public int count() {
+        Cursor mCount = null;
+        if (mDb.isOpen()) {
+            mCount = mDb.rawQuery("select count(*) from " + DbHelper.TABLE_NAME, null);
+        }
+        if (mCount != null) {
+            mCount.moveToFirst();
+            int count = mCount.getInt(0);
+            mCount.close();
+            return count;
+        } else {
+            return -1;
+        }
+    }
+
     public Observable<Word> getWords() {
         return Observable.create(subscriber -> {
             Cursor cursor = null;

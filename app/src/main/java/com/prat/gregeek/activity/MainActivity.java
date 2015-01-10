@@ -44,10 +44,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 
-public class WordOfTheDay extends ActionBarActivity
+public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    private static final String TAG = WordOfTheDay.class.getSimpleName();
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -79,7 +79,7 @@ public class WordOfTheDay extends ActionBarActivity
     }
 
     private void getRandomWord(TextView textView) {
-        mDbAdapter = new DbAdapter(WordOfTheDay.this);
+        mDbAdapter = new DbAdapter(MainActivity.this);
         mDbAdapter.open();
 
         // get random index
@@ -199,7 +199,7 @@ public class WordOfTheDay extends ActionBarActivity
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
-            ((WordOfTheDay) activity).onSectionAttached(
+            ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }

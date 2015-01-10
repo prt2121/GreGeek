@@ -20,6 +20,7 @@ package com.prat.gregeek.activity;
 import com.prat.gregeek.NavigationDrawerFragment;
 import com.prat.gregeek.R;
 import com.prat.gregeek.db.DbAdapter;
+import com.prat.gregeek.model.Word;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -34,6 +35,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.Random;
+
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 public class WordOfTheDay extends ActionBarActivity
@@ -51,7 +59,9 @@ public class WordOfTheDay extends ActionBarActivity
      */
     private CharSequence mTitle;
 
-    private DbAdapter dbAdapter;
+    private DbAdapter mDbAdapter;
+
+    private Subscription mSubscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,28 +76,31 @@ public class WordOfTheDay extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
 
-        // test database
-        /*
-        dbAdapter = new DbAdapter(MainActivity.this);
-        dbAdapter.open();
-        dbAdapter.getWords()
+    private void getRandomWord(TextView textView) {
+        mDbAdapter = new DbAdapter(WordOfTheDay.this);
+        mDbAdapter.open();
+
+        // get random index
+        Random ran = new Random();
+        int i = ran.nextInt(mDbAdapter.count()) + 1;
+        Log.d(TAG, "i " + i);
+        mSubscription = mDbAdapter.getWords()
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(w -> Log.d(TAG, w.getWord()));
-                */
-
-        // test database
-        dbAdapter = new DbAdapter(WordOfTheDay.this);
-        dbAdapter.open();
-        Log.d(TAG, "count : " + dbAdapter.count());
+                .take(i)
+                .last()
+                .map(Word::getWord)
+                .subscribe(textView::setText);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dbAdapter.close();
+        mDbAdapter.close();
+        mSubscription.unsubscribe();
     }
 
     @Override

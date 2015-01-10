@@ -20,9 +20,11 @@ package com.prat.gregeek.activity;
 import com.prat.gregeek.NavigationDrawerFragment;
 import com.prat.gregeek.R;
 import com.prat.gregeek.db.DbAdapter;
+import com.prat.gregeek.fragment.WotdFragment;
 import com.prat.gregeek.model.Word;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -45,7 +47,8 @@ import rx.schedulers.Schedulers;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        WotdFragment.OnFragmentInteractionListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -58,10 +61,6 @@ public class MainActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-
-    private DbAdapter mDbAdapter;
-
-    private Subscription mSubscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,29 +77,9 @@ public class MainActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
-    private void getRandomWord(TextView textView) {
-        mDbAdapter = new DbAdapter(MainActivity.this);
-        mDbAdapter.open();
-
-        // get random index
-        Random ran = new Random();
-        int i = ran.nextInt(mDbAdapter.count()) + 1;
-        Log.d(TAG, "i " + i);
-        mSubscription = mDbAdapter.getWords()
-                .onBackpressureBuffer()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .take(i)
-                .last()
-                .map(Word::getWord)
-                .subscribe(textView::setText);
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mDbAdapter.close();
-        mSubscription.unsubscribe();
     }
 
     @Override
@@ -108,7 +87,7 @@ public class MainActivity extends ActionBarActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, WotdFragment.newInstance())
                 .commit();
     }
 
@@ -161,6 +140,11 @@ public class MainActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     /**

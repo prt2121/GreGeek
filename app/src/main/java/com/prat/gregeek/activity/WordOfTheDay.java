@@ -15,8 +15,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.prat.gregeek;
+package com.prat.gregeek.activity;
 
+import com.prat.gregeek.NavigationDrawerFragment;
+import com.prat.gregeek.R;
 import com.prat.gregeek.db.DbAdapter;
 
 import android.app.Activity;
@@ -33,14 +35,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
-
-public class MainActivity extends ActionBarActivity
+public class WordOfTheDay extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = WordOfTheDay.class.getSimpleName();
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -80,7 +79,7 @@ public class MainActivity extends ActionBarActivity
                 */
 
         // test database
-        dbAdapter = new DbAdapter(MainActivity.this);
+        dbAdapter = new DbAdapter(WordOfTheDay.this);
         dbAdapter.open();
         Log.d(TAG, "count : " + dbAdapter.count());
     }
@@ -187,7 +186,7 @@ public class MainActivity extends ActionBarActivity
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
+            ((WordOfTheDay) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }

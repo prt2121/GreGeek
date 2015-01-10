@@ -79,7 +79,7 @@ public class DailyWordFragment extends Fragment {
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_word_of_the_day, container, false);
-        TextView textView = (TextView) view.findViewById(R.id.daily_word);
+        TextView textView = (TextView) view.findViewById(R.id.word);
         getRandomWord(getActivity(), textView);
         return view;
     }

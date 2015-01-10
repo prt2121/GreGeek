@@ -74,17 +74,25 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
+        switch (position) {
+            case 0 : replaceFragment(DailyWordFragment.newInstance());
+                break;
+            default: replaceFragment(PlaceholderFragment.newInstance(position));
+        }
+    }
+
+    private void replaceFragment(Fragment fragment) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, DailyWordFragment.newInstance())
+                .replace(R.id.container, fragment)
                 .commit();
     }
 
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = getString(R.string.title_section1);
+                mTitle = getString(R.string.title_word_of_the_day);
                 break;
             case 2:
                 mTitle = getString(R.string.title_section2);

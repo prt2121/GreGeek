@@ -19,9 +19,7 @@ package com.prat.gregeek.activity;
 
 import com.prat.gregeek.NavigationDrawerFragment;
 import com.prat.gregeek.R;
-import com.prat.gregeek.db.DbAdapter;
-import com.prat.gregeek.fragment.WotdFragment;
-import com.prat.gregeek.model.Word;
+import com.prat.gregeek.fragment.DailyWordFragment;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -31,24 +29,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import java.util.Random;
-
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        WotdFragment.OnFragmentInteractionListener {
+        DailyWordFragment.OnFragmentInteractionListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -87,7 +77,7 @@ public class MainActivity extends ActionBarActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, WotdFragment.newInstance())
+                .replace(R.id.container, DailyWordFragment.newInstance())
                 .commit();
     }
 

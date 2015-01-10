@@ -38,14 +38,14 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Word of the day fragment
  * Activities that contain this fragment must implement the
- * {@link WotdFragment.OnFragmentInteractionListener} interface
+ * {@link DailyWordFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link WotdFragment#newInstance} factory method to
+ * Use the {@link DailyWordFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WotdFragment extends Fragment {
+public class DailyWordFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
@@ -60,12 +60,12 @@ public class WotdFragment extends Fragment {
      * @return A new instance of fragment WordOfTheDayFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static WotdFragment newInstance() {
-        WotdFragment fragment = new WotdFragment();
+    public static DailyWordFragment newInstance() {
+        DailyWordFragment fragment = new DailyWordFragment();
         return fragment;
     }
 
-    public WotdFragment() {
+    public DailyWordFragment() {
         // Required empty public constructor
     }
 
@@ -79,7 +79,7 @@ public class WotdFragment extends Fragment {
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_word_of_the_day, container, false);
-        TextView textView = (TextView) view.findViewById(R.id.wotd_word);
+        TextView textView = (TextView) view.findViewById(R.id.daily_word);
         getRandomWord(getActivity(), textView);
         return view;
     }

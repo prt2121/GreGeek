@@ -75,9 +75,11 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         switch (position) {
-            case 0 : replaceFragment(DailyWordFragment.newInstance());
+            case 0:
+                replaceFragment(DailyWordFragment.newInstance());
                 break;
-            default: replaceFragment(PlaceholderFragment.newInstance(position));
+            default:
+                replaceFragment(PlaceholderFragment.newInstance(position));
         }
     }
 

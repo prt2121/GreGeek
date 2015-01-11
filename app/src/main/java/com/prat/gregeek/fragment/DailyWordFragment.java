@@ -17,6 +17,10 @@
 
 package com.prat.gregeek.fragment;
 
+import com.prat.gregeek.R;
+import com.prat.gregeek.db.DbAdapter;
+import com.prat.gregeek.model.Word;
+
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
@@ -26,10 +30,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.prat.gregeek.R;
-import com.prat.gregeek.db.DbAdapter;
-import com.prat.gregeek.model.Word;
 
 import java.util.Random;
 
@@ -135,12 +135,12 @@ public class DailyWordFragment extends Fragment {
         Random ran = new Random();
         int i = ran.nextInt(mDbAdapter.count()) + 1;
         mSubscription = mDbAdapter.getWords()
-                .onBackpressureBuffer()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .take(i)
                 .last()
                 .map(Word::getWord)
+                .onBackpressureBuffer()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(textView::setText);
     }
 

@@ -38,20 +38,20 @@ public class FlashcardTextView extends TextView {
 
     public FlashcardTextView(Context context) {
         super(context);
-        init(context, null);
+        init();
     }
 
     public FlashcardTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
+        init();
     }
 
     public FlashcardTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs);
+        init();
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    private void init() {
         setBackgroundResource(R.drawable.textview_border);
         setGravity(Gravity.CENTER);
         mFifteen = convertToPx(15);

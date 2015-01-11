@@ -32,7 +32,7 @@ import android.widget.TextView;
  */
 public class FlashcardTextView extends TextView {
 
-    private static int mTwelve;
+    private static int mFifteen;
 
     private static int mNine;
 
@@ -54,7 +54,7 @@ public class FlashcardTextView extends TextView {
     private void init(Context context, AttributeSet attrs) {
         setBackgroundResource(R.drawable.textview_border);
         setGravity(Gravity.CENTER);
-        mTwelve = convertToPx(15);
+        mFifteen = convertToPx(15);
         mNine = convertToPx(9);
     }
 
@@ -63,7 +63,7 @@ public class FlashcardTextView extends TextView {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) getLayoutParams();
-        layoutParams.setMargins(mTwelve, mNine, mTwelve, mNine);
+        layoutParams.setMargins(mFifteen, mNine, mFifteen, mNine);
         setLayoutParams(layoutParams);
         setPadding(mNine, mNine, mNine, mNine);
     }

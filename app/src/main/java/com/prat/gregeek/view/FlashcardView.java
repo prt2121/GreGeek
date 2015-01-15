@@ -21,32 +21,52 @@ import com.prat.gregeek.R;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
  * Created by prt2121 on 1/10/15.
  */
-public class FlashcardTextView extends TextView {
+public class FlashcardView extends TextView {
 
     private static int mFifteen;
 
     private static int mNine;
 
-    public FlashcardTextView(Context context) {
+    private OnClickListener mOnClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (mClickListener != null) {
+                mClickListener.onClick(v);
+            }
+            toggleShowAnswer();
+        }
+    };
+
+    private boolean mShowQuestion = true;
+
+    private CharSequence mQuizText = null;
+
+    private CharSequence mAnswerText = null;
+
+    private OnClickListener mClickListener;
+
+    public FlashcardView(Context context) {
         super(context);
         init();
     }
 
-    public FlashcardTextView(Context context, AttributeSet attrs) {
+    public FlashcardView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public FlashcardTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public FlashcardView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -56,6 +76,12 @@ public class FlashcardTextView extends TextView {
         setGravity(Gravity.CENTER);
         mFifteen = convertToPx(15);
         mNine = convertToPx(9);
+        setOnClickListener(mOnClickListener);
+        setQuizText(getText());
+    }
+
+    public void setClickListener(OnClickListener onClickListener) {
+        mClickListener = onClickListener;
     }
 
     @Override
@@ -76,4 +102,35 @@ public class FlashcardTextView extends TextView {
                 r.getDisplayMetrics()
         );
     }
+
+    public CharSequence getQuizText() {
+        return mQuizText;
+    }
+
+    public void setQuizText(CharSequence quizText) {
+        mQuizText = quizText;
+    }
+
+    public CharSequence getAnswerText() {
+        return mAnswerText;
+    }
+
+    public void setAnswerText(CharSequence answerText) {
+        mAnswerText = answerText;
+    }
+
+    private void toggleShowAnswer() {
+        if (mShowQuestion) {
+            mShowQuestion = false;
+            if (!TextUtils.isEmpty(mAnswerText)) {
+                setText(mAnswerText);
+            }
+        } else {
+            mShowQuestion = true;
+            if (!TextUtils.isEmpty(mQuizText)) {
+                setText(mQuizText);
+            }
+        }
+    }
+
 }

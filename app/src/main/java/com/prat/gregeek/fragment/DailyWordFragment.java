@@ -19,7 +19,7 @@ package com.prat.gregeek.fragment;
 
 import com.prat.gregeek.R;
 import com.prat.gregeek.db.DbAdapter;
-import com.prat.gregeek.model.Word;
+import com.prat.gregeek.view.FlashcardView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -53,6 +53,10 @@ public class DailyWordFragment extends Fragment {
 
     private Subscription mSubscription;
 
+    public DailyWordFragment() {
+        // Required empty public constructor
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -65,10 +69,6 @@ public class DailyWordFragment extends Fragment {
         return fragment;
     }
 
-    public DailyWordFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,8 +79,11 @@ public class DailyWordFragment extends Fragment {
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_word_of_the_day, container, false);
-        TextView textView = (TextView) view.findViewById(R.id.word);
-        getRandomWord(getActivity(), textView);
+        getRandomWord(getActivity(),
+                (TextView) view.findViewById(R.id.word),
+                (FlashcardView) view.findViewById(R.id.dailyWordDefinition),
+                (FlashcardView) view.findViewById(R.id.dailyWordExample),
+                (FlashcardView) view.findViewById(R.id.dailyWordSynonym));
         return view;
     }
 
@@ -115,6 +118,28 @@ public class DailyWordFragment extends Fragment {
         mSubscription.unsubscribe();
     }
 
+    private void getRandomWord(Context context, TextView word,
+            FlashcardView definition, FlashcardView example, FlashcardView synonym) {
+        mDbAdapter = new DbAdapter(context);
+        mDbAdapter.open();
+        // get random index
+        Random random = new Random();
+        int i = random.nextInt(mDbAdapter.count()) + 1;
+        mSubscription = mDbAdapter.getWords()
+                .take(i)
+                .last()
+                .onBackpressureBuffer()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(w -> {
+                    word.setText(w.getWord());
+                    definition.setAnswerText(w.getDefinition());
+                    example.setAnswerText(w.getExample());
+                    synonym.setAnswerText(w.getSynonyms());
+                });
+    }
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -125,23 +150,6 @@ public class DailyWordFragment extends Fragment {
 
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
-    }
-
-
-    private void getRandomWord(Context context, TextView textView) {
-        mDbAdapter = new DbAdapter(context);
-        mDbAdapter.open();
-        // get random index
-        Random ran = new Random();
-        int i = ran.nextInt(mDbAdapter.count()) + 1;
-        mSubscription = mDbAdapter.getWords()
-                .take(i)
-                .last()
-                .map(Word::getWord)
-                .onBackpressureBuffer()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(textView::setText);
     }
 
 

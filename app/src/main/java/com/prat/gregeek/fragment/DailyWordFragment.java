@@ -18,6 +18,7 @@
 package com.prat.gregeek.fragment;
 
 import com.prat.gregeek.R;
+import com.prat.gregeek.activity.MainActivity;
 import com.prat.gregeek.db.DbAdapter;
 import com.prat.gregeek.view.FlashcardView;
 
@@ -47,6 +48,8 @@ import rx.schedulers.Schedulers;
  */
 public class DailyWordFragment extends Fragment {
 
+    private static final String ARG_SECTION_NUMBER = "section_number";
+
     private OnFragmentInteractionListener mListener;
 
     private DbAdapter mDbAdapter;
@@ -63,9 +66,11 @@ public class DailyWordFragment extends Fragment {
      *
      * @return A new instance of fragment WordOfTheDayFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static DailyWordFragment newInstance() {
+    public static DailyWordFragment newInstance(int sectionNumber) {
         DailyWordFragment fragment = new DailyWordFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -99,6 +104,8 @@ public class DailyWordFragment extends Fragment {
         super.onAttach(activity);
         try {
             mListener = (OnFragmentInteractionListener) activity;
+            ((MainActivity) activity).onSectionAttached(
+                    getArguments().getInt(ARG_SECTION_NUMBER));
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");

@@ -76,7 +76,7 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         switch (position) {
             case 0:
-                replaceFragment(DailyWordFragment.newInstance());
+                replaceFragment(DailyWordFragment.newInstance(position));
                 break;
             default:
                 replaceFragment(PlaceholderFragment.newInstance(position));

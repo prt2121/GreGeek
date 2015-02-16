@@ -57,6 +57,10 @@ public class DbAdapter {
         mDb.close();
     }
 
+    public boolean isOpen() {
+        return mDb.isOpen();
+    }
+
     public SQLiteDatabase getDB() {
         return mDb;
     }

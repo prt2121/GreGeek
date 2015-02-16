@@ -121,7 +121,9 @@ public class DailyWordFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mDbAdapter.close();
+        if (mDbAdapter.isOpen()) {
+            mDbAdapter.close();
+        }
         mSubscription.unsubscribe();
     }
 
@@ -143,6 +145,7 @@ public class DailyWordFragment extends Fragment {
                     definition.setAnswerText(w.getDefinition());
                     example.setAnswerText(w.getExample());
                     synonym.setAnswerText(w.getSynonyms());
+                    mDbAdapter.close();
                 });
     }
 

@@ -15,7 +15,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.prat.gregeek;
+package com.prat.gregeek.fragment;
+
+import com.prat.gregeek.R;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

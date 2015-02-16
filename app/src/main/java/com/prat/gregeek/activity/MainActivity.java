@@ -17,7 +17,7 @@
 
 package com.prat.gregeek.activity;
 
-import com.prat.gregeek.NavigationDrawerFragment;
+import com.prat.gregeek.fragment.NavigationDrawerFragment;
 import com.prat.gregeek.R;
 import com.prat.gregeek.fragment.DailyWordFragment;
 

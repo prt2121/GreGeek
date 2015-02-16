@@ -35,6 +35,8 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -55,6 +57,13 @@ android {
         abortOnError false
         disable 'InvalidPackage'
     }
+    dexOptions {
+        preDexLibraries false
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'LICENSE.txt'
+    }
 }
 
 dependencies {
@@ -62,9 +71,12 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
 
-    androidTestCompile 'junit:junit:4.10'
-    androidTestCompile 'org.robolectric:robolectric:2.4'
-    androidTestCompile 'com.squareup:fest-android:1.0.8'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
+    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
+
+//    androidTestCompile 'junit:junit:4.10'
+//    androidTestCompile 'org.robolectric:robolectric:2.4'
+//    androidTestCompile 'com.squareup:fest-android:1.0.8'
     compile 'com.google.code.gson:gson:2.3'
     compile 'io.reactivex:rxjava:1.0.1'
     compile 'io.reactivex:rxandroid:0.23.0'
@@ -74,7 +86,7 @@ dependencies {
     compile 'javax.annotation:jsr250-api:1.0'
 }
 
-robolectric {
-    include '**/*Test.class'
-    maxHeapSize = "2048m"
-}
+//robolectric {
+//    include '**/*Test.class'
+//    maxHeapSize = "2048m"
+//}

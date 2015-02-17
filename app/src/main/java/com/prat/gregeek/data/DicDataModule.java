@@ -13,7 +13,7 @@ public final class DicDataModule {
 
     @Provides
     @Singleton
-    public DicData provideApi() {
+    public DicData provideDicDataModule() {
         return new DicData();
     }
 

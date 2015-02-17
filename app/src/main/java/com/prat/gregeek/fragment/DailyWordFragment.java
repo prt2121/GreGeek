@@ -17,8 +17,10 @@
 
 package com.prat.gregeek.fragment;
 
+import com.prat.gregeek.GreApp;
 import com.prat.gregeek.R;
 import com.prat.gregeek.activity.MainActivity;
+import com.prat.gregeek.data.DicData;
 import com.prat.gregeek.db.DbAdapter;
 import com.prat.gregeek.view.FlashcardView;
 
@@ -34,6 +36,8 @@ import android.widget.TextView;
 
 import java.util.Random;
 
+import javax.inject.Inject;
+
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -47,6 +51,9 @@ import rx.schedulers.Schedulers;
  * create an instance of this fragment.
  */
 public class DailyWordFragment extends Fragment {
+
+    @Inject
+    DicData mDicData;
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -77,6 +84,7 @@ public class DailyWordFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        GreApp.getInstance().getGraph().inject(this);
     }
 
     @Override
@@ -131,12 +139,7 @@ public class DailyWordFragment extends Fragment {
             FlashcardView definition, FlashcardView example, FlashcardView synonym) {
         mDbAdapter = new DbAdapter(context);
         mDbAdapter.open();
-        // get random index
-        Random random = new Random();
-        int i = random.nextInt(mDbAdapter.count()) + 1;
-        mSubscription = mDbAdapter.getWords()
-                .take(i)
-                .last()
+        mSubscription = mDicData.getRandomWord(mDbAdapter)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

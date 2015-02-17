@@ -18,7 +18,7 @@
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/debug/res" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
@@ -96,19 +96,19 @@
     <orderEntry type="library" exported="" name="rxjava-1.0.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javawriter-2.1.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javax.annotation-api-1.2" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.1" level="project" />
-    <orderEntry type="library" exported="" name="sqliteassethelper-2.0.1" level="project" />
+    <orderEntry type="library" exported="" name="hamcrest-core-1.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="espresso-idling-resource-2.0" level="project" />
+    <orderEntry type="library" exported="" name="sqliteassethelper-2.0.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-library-1.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="espresso-core-2.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-21.0.3" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="objenesis-2.1" level="project" />
+    <orderEntry type="library" exported="" name="objenesis-2.1" level="project" />
     <orderEntry type="library" exported="" name="rxjava-string-0.22.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="dagger-2.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="jsr305-2.0.1" level="project" />
     <orderEntry type="library" exported="" name="javax.inject-1" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="mockito-core-1.10.19" level="project" />
+    <orderEntry type="library" exported="" name="mockito-core-1.10.19" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-integration-1.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="junit-dep-4.10" level="project" />

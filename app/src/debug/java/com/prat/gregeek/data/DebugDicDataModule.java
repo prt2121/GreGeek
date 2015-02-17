@@ -1,5 +1,7 @@
 package com.prat.gregeek.data;
 
+import org.mockito.Mockito;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -19,11 +21,10 @@ public class DebugDicDataModule {
     @Provides
     @Singleton
     DicData provideDicDataModule() {
-        return new DicData();
-//        if (mockMode) {
-//            return Mockito.mock(Api.class);
-//        } else {
-//            return new DicData();
-//        }
+        if (mockMode) {
+            return Mockito.mock(DicData.class);
+        } else {
+            return new DicData();
+        }
     }
 }

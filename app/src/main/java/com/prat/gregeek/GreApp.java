@@ -8,9 +8,11 @@ import android.app.Application;
 public class GreApp extends Application {
 
     private static GreApp sInstance;
+
     private Graph mGraph;
 
-    @Override public void onCreate() {
+    @Override
+    public void onCreate() {
         super.onCreate();
         sInstance = this;
         mGraph = Graph.Initializer.init(false);
@@ -22,5 +24,9 @@ public class GreApp extends Application {
 
     public Graph getGraph() {
         return mGraph;
+    }
+
+    public void setMockMode(boolean useMock) {
+        mGraph = Graph.Initializer.init(useMock);
     }
 }

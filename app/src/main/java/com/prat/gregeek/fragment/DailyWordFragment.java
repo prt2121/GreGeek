@@ -34,8 +34,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Random;
-
 import javax.inject.Inject;
 
 import rx.Subscription;
@@ -151,7 +149,6 @@ public class DailyWordFragment extends Fragment {
                     mDbAdapter.close();
                 });
     }
-
 
     /**
      * This interface must be implemented by activities that contain this
